@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Three Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            background-image: url('./img/bg.jpg');
+            font-family: 'Poppins', sans-serif;
+            font-size: 38px;
+        }
+        .box-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 100px;
+        }
+        .box {
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            animation: shakeBox 3s infinite alternate ease-in-out;
+        }
+        .box:hover {
+            transform: scale(1.1);
+        }
+        .hidden {
+            display: none;
+        }
+        /* Hiệu ứng rung lắc nhẹ vĩnh cửu */
+        @keyframes shakeBox {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(2deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-2deg); }
+            100% { transform: rotate(0deg); }
+        }
+        /* Hiệu ứng nhấp nháy vĩnh cửu */
+        @keyframes glowBaby {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.05); filter: brightness(1.01); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+        .fade-in {
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInScale 0.5s ease-out forwards, glowBaby 3s infinite alternate ease-in-out;
+        }
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        h2 {
+            font-weight: 600;
+            color: #ff6b81;
+        }
+        .btn {
+            font-size: 16px;
+            padding: 8px 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+  <iframe id="youtubePlayer" width="0" height="0" src="https://www.youtube.com/watch?v=atq9S7pp1rQ" frameborder="0" allow="autoplay"></iframe>
+
+
+    <div class="box-container">
+        <!-- 4 hộp -->
+        <img style="width: 300px; height: 300px; border-radius: 10px;" src="/img/hop1.jpg" class="box" onclick="openBox(0)">
+        <img style="width: 300px; height: 300px; border-radius: 10px;" src="/img/hop 2.jpg" class="box" onclick="openBox(1)">
+        <img style="width: 300px; height: 300px; border-radius: 10px;" src="/img/hop3.jpg" class="box" onclick="openBox(2)">
+        <img style="width: 300px; height: 300px; border-radius: 10px;" src="/img/hop4.jpg" class="box" onclick="openBox(3)">
+    </div>
+
+    <!-- Container chứa các ảnh Baby Three -->
+    <div id="babyThreeContainer" class="hidden mt-4">
+        <img style="width: 250px; height: 250px; border-radius: 10px;" src="" id="babyThree" class="img-fluid fade-in" onclick="showQuestion()" style="max-width: 200px;">
+    </div>
+
+    <!-- Câu hỏi & nút hiện đáp án -->
+    <div id="questionContainer" class="hidden mt-3 fade-in">
+        <p id="question" class="fw-bold">Câu hỏi sẽ hiển thị ở đây!</p>
+        <button class="btn btn-primary" onclick="showAnswer()">Hiện đáp án</button>
+        <p id="answer" class="hidden mt-2 text-success fw-bold"></p>
+    </div>
+
+    <iframe id="youtubePlayer" width="0" height="0"
+    src="https://www.youtube.com/embed/atq9S7pp1rQ?autoplay=1&loop=1&playlist=atq9S7pp1rQ"
+    frameborder="0" allow="autoplay">
+</iframe>
+
+
+    <script>
+        const questions = [
+            { 
+                question: "Bài trước em học là bài gì?", 
+                answer: "Khủng Long!", 
+                image: "/img/pet1.jpg"
+            },
+            { 
+                question: "Khủng long thường sống ở đâu?", 
+                answer: "Sống ở các vùng đất khô!", 
+                image: "/img/pet2.jpg"
+            },
+            { 
+                question: "Khủng long có tồn tại không?", 
+                answer: "Đã bị tuyệt chủng!", 
+                image: "/img/pet3.jpg"
+            },
+            { 
+                question: "Khủng long có khả năng tự vệ tốt nhờ điều gì?", 
+                answer: "Nhờ cái đầu cứng và cái quất đuôi dũng mãnh!", 
+                image: "/img/pet4.jpg"
+            }
+        ];
+
+        function openBox(index) {
+            const babyThreeContainer = document.getElementById("babyThreeContainer");
+            const babyThreeImage = document.getElementById("babyThree");
+
+            babyThreeImage.src = questions[index].image;
+            babyThreeContainer.classList.remove("hidden");
+            babyThreeContainer.classList.add("fade-in");
+
+            document.getElementById("questionContainer").classList.add("hidden");
+
+            document.getElementById("question").innerText = questions[index].question;
+            document.getElementById("answer").innerText = questions[index].answer;
+            document.getElementById("answer").classList.add("hidden");
+        }
+
+        function showQuestion() {
+            const questionContainer = document.getElementById("questionContainer");
+            questionContainer.classList.remove("hidden");
+            questionContainer.classList.add("fade-in");
+        }
+
+        function showAnswer() {
+            document.getElementById("answer").classList.remove("hidden");
+        }
+    </script>
+
+</body>
+</html>
